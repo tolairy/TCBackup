@@ -1,4 +1,4 @@
 TCBackup
 ========
 
-A Thin-Cloud Backup System
+A Thin-Cloud Backup
