@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#dataset_path=/home/dataset/rdb/
+#dataset_path=/home/lairongyu/dataset/gcc/
+dataset_path=/home/fumin/linux/
+#dataset_path=/home/dataset/rdb_trace/
+#dataset_path=/home/dataset/linux_trace/
+#dataset_path=/home/dataset/rdb/
+#dataset_path=/home/lairongyu/learn/
+restore_path=/home/lairongyu/restore
+#output_path=./test/backup_norewrite
+output_path=./test/overhead_rewrite
+job_count=0
+for dir in $(ls $dataset_path);do
+    fullpath=$dataset_path$dir
+            
+#./TCBackup_client  -S $fullpath  -o test/norewrite
+#./TCBackup_client -R PER --ref_threshold=$1 -S $fullpath -o test/rewrite_$1
+#./seg_statistics.py >> test/rewrite_norewrite.txt    
+#./TCBackup_client -R CAP --cap_size=20 --cap_count=$1 -S $fullpath  -o $output_path
+sync
+echo 3 > /proc/sys/vm/drop_caches
+free -m
+#./TCBackup_client -O 1.25 -c  -b $fullpath -o test/overhead_norewrite_test
+
+./TCBackup_client -O 1.25 -c  -R CFL --CFL=0.6 --seg_reuse=0.01 -b $fullpath -o test/overhead_CFL_0.6
+#./TCBackup_client -O 1.25 -c -R PER --ref_threshold=$1 -b $fullpath -o test/overhead_rewrite_$1
+#./TCBackup_client -O 1.25 -c -R CAP --cap_size=20 --cap_count=$1 -b $fullpath -o test/overhead_capping_20_$1
+#./TCBackup_client -R PER --ref_threshold=$1 -S $fullpath  -o $output_path
+  ((job_count++))
+   if [ $job_count -eq 100 ];then
+       exit
+ fi
+#./TCBackup_client -p -R CAP --cap_size=40 --cap_count=$1 -b $fullpath  -o $output_path
+# job_count=`./TCBackup_client -l|grep JobId|wc -l`
+#   ./TCBackup_client -o $output_path -R CAP -r $job_count,$restore_path
+done

@@ -1,0 +1,5 @@
+all:
+	#g++ -o test  cloud.c baidu/api.c -lbcs_sdk -Lbaidu/lib -Wl,-rpath baidu/lib -lcrypto -lcurl -g
+	g++ -o test  sample.cpp  -L./lib -Wl,-rpath ./lib -lbcs_sdk  -lcrypto -lcurl -g
+clean:
+	rm -rf test

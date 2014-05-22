@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ ! -d "./client/bin" ];then
+    mkdir "./client/bin"
+fi
+
+if [ ! -d "./client/tmp" ];then
+    mkdir "./client/tmp"
+fi
+
+rm -rf ./client/bin/*
+find ./client/tmp/ -name "*" | xargs rm -rf ./client/tmp/'*'
+mkdir ./client/tmp
+rm -rf /home/yyf/TCBackup/data/*
+
+echo  "rebuild files success"

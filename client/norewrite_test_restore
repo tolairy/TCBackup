@@ -1,0 +1,19 @@
+#!/bin/sh
+
+output_path=./test/backup
+restore_path=/home/lairongyu/restore
+
+job_count=`./TCBackup_client -l|grep JobId|wc -l`
+job_id=1
+
+while [ $job_id -le $job_count ] ;do
+    echo $job_id
+    ./TCBackup_client -o $output_path -r $job_id,$restore_path
+    job_id=`expr $job_id + 1`
+
+done
+    
+#    grep Job $jobs
+#    echo $jobs
+#    cat &jobs
+

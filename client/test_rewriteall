@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#dataseg_path=/home/dataset/rdb/
+#dataset_path=/home/lairongyu/dataset/gcc/
+#dataset_path=/home/fumin/vm/
+dataset_path=/home/dataset/linux_trace/
+#dataset_path=/home/lairongyu/learn/
+restore_path=/home/lairongyu/restore
+output_path=./test/backup_rewriteall
+job_count=0
+for dir in $(ls $dataset_path);do
+    fullpath=$dataset_path$dir
+#../server/TCBackup_server -p &
+#   sleep 3    
+    ./TCBackup_client  -S $fullpath  -o $output_path 
+ ((job_count++))
+    if [ $job_count -eq 100 ];then
+    exit
+    fi
+#   ./TCBackup_client -o $output_path -R 0.1 -r 1,$restore_path
+#    kill -9 $(pidof TCBackup_server)
+    cd ..
+    ./rebuild
+    ./clear
+    cd client
+    
+done

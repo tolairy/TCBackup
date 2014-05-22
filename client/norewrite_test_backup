@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#dataset_path=/home/lairongyu/dataset/gcc/
+dataset_path=/home/fumin/vm/
+#dataset_path=/home/fumin/linux/
+#dataset_path=/home/lairongyu/learn/
+for dir in $(ls $dataset_path);do
+    fullpath=$dataset_path$dir
+    echo backuping $fullpath
+    
+    ./TCBackup_client -p  -b $fullpath -o ./test/backup
+done
+
