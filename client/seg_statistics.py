@@ -27,7 +27,7 @@ for count, line in enumerate(open(path, 'rU')):
     #pass
     count += 1
 
-print count
+#print count
 
 if version_number > count:
     version_number = count
@@ -39,6 +39,7 @@ while cur_count <= count:
 
     i = 1
     dict = {}
+    length = 0
     while i <= version_number:
         line = linecache.getline(path, cur_count - i + 1)
         line = line[:-1]
@@ -46,16 +47,16 @@ while cur_count <= count:
     # print list
         for item in list:
     	    info = item.split(',')
-            # print info
-    	    if info[0] not in dict:
-    		    dict[info[0]] = info[1]
-    
-    		
-      #  if segment not in segments:
-       #     segments.append(segment)
+            #print info
+            if info[0] not in dict:
+                dict[info[0]] = info[1]
+                length += int(info[1])
         i += 1
     
-    print ('The last %d version used %d segments' % (version_number, len(dict)))
+ #   print ('The last %d version used %d segments' % (version_number, len(dict)))
+    length = length / (1024*1024)
+    print (length)
+
        # print dict
 
     cur_count += 1
